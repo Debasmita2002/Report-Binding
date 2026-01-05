@@ -1,0 +1,22 @@
+Microsoft Windows [Version 10.0.17763.8146]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\RAYCLOUD>cd c:\win-acme
+
+c:\win-acme>wacs.exe
+
+ A simple Windows ACMEv2 client (WACS)
+ Software version 2.2.9.1701 (release, pluggable, standalone, 64-bit)
+ Connecting to https://acme-v02.api.letsencrypt.org/...
+ Connection OK!
+ Scheduled task not configured yet
+ Please report issues at https://github.com/win-acme/win-acme
+
+ N: Create certificate (default settings)
+ M: Create certificate (full options)
+ R: Run renewals (0 currently due)
+ A: Manage renewals (0 total)
+ O: More options...
+ Q: Quit
+
+ Please choose from the menu:
