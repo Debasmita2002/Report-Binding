@@ -22,34 +22,33 @@ c:\win-acme>wacs.exe
  Please choose from the menu: N
 
  Running in mode: Interactive, Simple
- No websites with host bindings have been configured in IIS. Add one in the IIS Manager or choose the plugin 'Manual input' instead.
- Source plugin IIS was unable to generate options
 
- N: Create certificate (default settings)
- M: Create certificate (full options)
- R: Run renewals (0 currently due)
- A: Manage renewals (0 total)
- O: More options...
- Q: Quit
+ Please select which website(s) should be scanned for host names. You may
+ input one or more site identifiers (comma-separated) to filter by those
+ sites, or alternatively leave the input empty to scan *all* websites.
 
- Please choose from the menu: <Enter>
+ 5: PFUNDCOMMBALCO (1 binding)
 
- Running in mode: Interactive, Simple
-^C
-c:\win-acme>wacs.exe
+ Site identifier(s) or <Enter> to choose all: 5
 
- A simple Windows ACMEv2 client (WACS)
- Software version 2.2.9.1701 (release, pluggable, standalone, 64-bit)
- Connecting to https://acme-v02.api.letsencrypt.org/...
- Connection OK!
- Scheduled task not configured yet
- Please report issues at https://github.com/win-acme/win-acme
+ 1: rcplpf.com (Site 5)
 
- N: Create certificate (default settings)
- M: Create certificate (full options)
- R: Run renewals (0 currently due)
- A: Manage renewals (0 total)
- O: More options...
- Q: Quit
+ Listed above are the bindings found on the selected site(s). By default all
+ of them will be included, but you may either pick specific ones by typing the
+ host names or identifiers (comma-separated) or filter them using one of the
+ options from the menu.
 
- Please choose from the menu:
+ P: Pick bindings based on a search pattern
+ A: Pick *all* bindings
+
+ Binding identifiers(s) or menu option: 1
+
+ 1: rcplpf.com (Site 5)
+
+ Continue with this selection? (y*/n) - yes
+
+ Source generated using plugin IIS: rcplpf.com
+
+Terms of service:    C:\ProgramData\win-acme\acme-v02.api.letsencrypt.org\LE-SA-v1.6-August-18-2025.pdf
+
+ Open in default application? (y/n*)
