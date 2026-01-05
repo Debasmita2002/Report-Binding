@@ -53,4 +53,29 @@ c:\win-acme>wacs.exe
 Existing renewal:    [IIS] PFUNDCOMMBALCO, rcplpf.com - 1 renewal, due
                      2026-3-1
 
- Overwrite settings? (y*/n)
+ Overwrite settings? (y*/n) - yes
+
+ Overwriting previously created renewal
+
+ Plugin IIS generated source rcplpf.com with 1 identifiers
+ Plugin Single created 1 order
+ Renewing [IIS] PFUNDCOMMBALCO, rcplpf.com
+ Using cache for [IIS] PFUNDCOMMBALCO, rcplpf.com. To get a new certificate within 1 days, run with --nocache.
+ Store with CertificateStore...
+ Installing certificate in the certificate store
+ Replacing certificate [IIS] PFUNDCOMMBALCO, rcplpf.com @ 2026-1-5 in store WebHosting
+ Installing with IIS...
+ Updating existing https binding rcplpf.com:443 (flags: 4)
+ Committing 1 https binding changes to IIS while updating site 5
+ Scheduled task looks healthy
+ Next renewal due after 2026-3-1
+ Certificate [IIS] PFUNDCOMMBALCO, rcplpf.com created
+
+ N: Create certificate (default settings)
+ M: Create certificate (full options)
+ R: Run renewals (0 currently due)
+ A: Manage renewals (1 total)
+ O: More options...
+ Q: Quit
+
+ Please choose from the menu:
