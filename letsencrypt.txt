@@ -19,4 +19,37 @@ c:\win-acme>wacs.exe
  O: More options...
  Q: Quit
 
+ Please choose from the menu: N
+
+ Running in mode: Interactive, Simple
+ No websites with host bindings have been configured in IIS. Add one in the IIS Manager or choose the plugin 'Manual input' instead.
+ Source plugin IIS was unable to generate options
+
+ N: Create certificate (default settings)
+ M: Create certificate (full options)
+ R: Run renewals (0 currently due)
+ A: Manage renewals (0 total)
+ O: More options...
+ Q: Quit
+
+ Please choose from the menu: <Enter>
+
+ Running in mode: Interactive, Simple
+^C
+c:\win-acme>wacs.exe
+
+ A simple Windows ACMEv2 client (WACS)
+ Software version 2.2.9.1701 (release, pluggable, standalone, 64-bit)
+ Connecting to https://acme-v02.api.letsencrypt.org/...
+ Connection OK!
+ Scheduled task not configured yet
+ Please report issues at https://github.com/win-acme/win-acme
+
+ N: Create certificate (default settings)
+ M: Create certificate (full options)
+ R: Run renewals (0 currently due)
+ A: Manage renewals (0 total)
+ O: More options...
+ Q: Quit
+
  Please choose from the menu:
