@@ -4,18 +4,19 @@ Microsoft Windows [Version 10.0.17763.8146]
 C:\Users\RAYCLOUD>cd c:\win-acme
 
 c:\win-acme>wacs.exe
+ Another instance of wacs.exe is already running, waiting for that to close...
 
  A simple Windows ACMEv2 client (WACS)
  Software version 2.2.9.1701 (release, pluggable, standalone, 64-bit)
  Connecting to https://acme-v02.api.letsencrypt.org/...
  Connection OK!
- Scheduled task not configured yet
+ Scheduled task looks healthy
  Please report issues at https://github.com/win-acme/win-acme
 
  N: Create certificate (default settings)
  M: Create certificate (full options)
  R: Run renewals (0 currently due)
- A: Manage renewals (0 total)
+ A: Manage renewals (1 total)
  O: More options...
  Q: Quit
 
@@ -49,6 +50,7 @@ c:\win-acme>wacs.exe
 
  Source generated using plugin IIS: rcplpf.com
 
-Terms of service:    C:\ProgramData\win-acme\acme-v02.api.letsencrypt.org\LE-SA-v1.6-August-18-2025.pdf
+Existing renewal:    [IIS] PFUNDCOMMBALCO, rcplpf.com - 1 renewal, due
+                     2026-3-1
 
- Open in default application? (y/n*)
+ Overwrite settings? (y*/n)
