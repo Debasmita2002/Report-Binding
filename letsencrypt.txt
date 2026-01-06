@@ -1,11 +1,25 @@
-if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-            navigator.serviceWorker.register('/sw.js')
-                .then(function () {
-                    console.log('Service Worker registered');
-                })
-                .catch(function (err) {
-                    console.error('Service Worker failed:', err);
-                });
-        });
+self.addEventListener("fetch", event => {
+    if (event.request.method !== "GET") return;
+
+    // Always fetch fresh HTML/navigation
+    if (
+        event.request.mode === "navigate" ||
+        event.request.destination === "document"
+    ) {
+        event.respondWith(fetch(event.request));
+        return;
     }
+
+    // Cache static assets only
+    event.respondWith(
+        caches.open(CACHE_NAME).then(cache =>
+            cache.match(event.request).then(response =>
+                response ||
+                fetch(event.request).then(networkResponse => {
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
+                })
+            )
+        )
+    );
+});
