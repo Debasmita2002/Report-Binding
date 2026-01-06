@@ -1,4 +1,17 @@
-const CACHE_NAME = "mvc-pwa-v2"; // 🔴 bump version
+const CACHE_NAME = "mvc-pwa-v3"; // 🔴 bump on every deploy
+
+const STATIC_EXTENSIONS = [
+    ".js",
+    ".css",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".svg",
+    ".woff",
+    ".woff2",
+    ".ttf",
+    ".ico"
+];
 
 self.addEventListener("install", event => {
     self.skipWaiting();
@@ -8,38 +21,48 @@ self.addEventListener("activate", event => {
     event.waitUntil(
         caches.keys().then(keys =>
             Promise.all(
-                keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+                keys
+                    .filter(k => k !== CACHE_NAME)
+                    .map(k => caches.delete(k))
             )
-        )
+        ).then(() => self.clients.claim())
     );
-    self.clients.claim();
 });
-
 
 self.addEventListener("fetch", event => {
 
-    const url = new URL(event.request.url);
+    const request = event.request;
+    const url = new URL(request.url);
 
-    // ❌ DO NOT CACHE OR INTERCEPT THESE
+    // ❌ Do not touch these
     if (
+        request.method !== "GET" ||
+        url.origin !== self.location.origin ||
         url.pathname === "/sw.js" ||
         url.pathname === "/manifest.json" ||
-        event.request.method !== "GET" ||
-        url.origin !== self.location.origin
+        request.mode === "navigate" // 🔥 VERY IMPORTANT
     ) {
         return;
     }
 
+    // ✅ Only cache static assets
+    const shouldCache = STATIC_EXTENSIONS.some(ext =>
+        url.pathname.endsWith(ext)
+    );
+
+    if (!shouldCache) return;
+
     event.respondWith(
         caches.open(CACHE_NAME).then(cache =>
-            cache.match(event.request).then(response => {
-                return (
-                    response ||
-                    fetch(event.request).then(networkResponse => {
-                        cache.put(event.request, networkResponse.clone());
-                        return networkResponse;
-                    })
-                );
+            cache.match(request).then(cached => {
+                if (cached) return cached;
+
+                return fetch(request).then(networkResponse => {
+                    if (networkResponse.ok) {
+                        cache.put(request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                });
             })
         )
     );
