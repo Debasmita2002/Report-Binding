@@ -1,81 +1,37 @@
-Microsoft Windows [Version 10.0.17763.8146]
-(c) 2018 Microsoft Corporation. All rights reserved.
+const CACHE_NAME = "mvc-pwa-v1";
 
-C:\Users\RAYCLOUD>cd c:\win-acme
+self.addEventListener("install", event => {
+    self.skipWaiting();
+});
 
-c:\win-acme>wacs.exe
- Another instance of wacs.exe is already running, waiting for that to close...
+self.addEventListener("activate", event => {
+    event.waitUntil(
+        caches.keys().then(keys =>
+            Promise.all(
+                keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+            )
+        )
+    );
+    self.clients.claim();
+});
 
- A simple Windows ACMEv2 client (WACS)
- Software version 2.2.9.1701 (release, pluggable, standalone, 64-bit)
- Connecting to https://acme-v02.api.letsencrypt.org/...
- Connection OK!
- Scheduled task looks healthy
- Please report issues at https://github.com/win-acme/win-acme
+self.addEventListener("fetch", event => {
+    event.respondWith(
+        caches.open(CACHE_NAME).then(cache =>
+            cache.match(event.request).then(response => {
+                if (response) return response;
 
- N: Create certificate (default settings)
- M: Create certificate (full options)
- R: Run renewals (0 currently due)
- A: Manage renewals (1 total)
- O: More options...
- Q: Quit
-
- Please choose from the menu: N
-
- Running in mode: Interactive, Simple
-
- Please select which website(s) should be scanned for host names. You may
- input one or more site identifiers (comma-separated) to filter by those
- sites, or alternatively leave the input empty to scan *all* websites.
-
- 5: PFUNDCOMMBALCO (1 binding)
-
- Site identifier(s) or <Enter> to choose all: 5
-
- 1: rcplpf.com (Site 5)
-
- Listed above are the bindings found on the selected site(s). By default all
- of them will be included, but you may either pick specific ones by typing the
- host names or identifiers (comma-separated) or filter them using one of the
- options from the menu.
-
- P: Pick bindings based on a search pattern
- A: Pick *all* bindings
-
- Binding identifiers(s) or menu option: 1
-
- 1: rcplpf.com (Site 5)
-
- Continue with this selection? (y*/n) - yes
-
- Source generated using plugin IIS: rcplpf.com
-
-Existing renewal:    [IIS] PFUNDCOMMBALCO, rcplpf.com - 1 renewal, due
-                     2026-3-1
-
- Overwrite settings? (y*/n) - yes
-
- Overwriting previously created renewal
-
- Plugin IIS generated source rcplpf.com with 1 identifiers
- Plugin Single created 1 order
- Renewing [IIS] PFUNDCOMMBALCO, rcplpf.com
- Using cache for [IIS] PFUNDCOMMBALCO, rcplpf.com. To get a new certificate within 1 days, run with --nocache.
- Store with CertificateStore...
- Installing certificate in the certificate store
- Replacing certificate [IIS] PFUNDCOMMBALCO, rcplpf.com @ 2026-1-5 in store WebHosting
- Installing with IIS...
- Updating existing https binding rcplpf.com:443 (flags: 4)
- Committing 1 https binding changes to IIS while updating site 5
- Scheduled task looks healthy
- Next renewal due after 2026-3-1
- Certificate [IIS] PFUNDCOMMBALCO, rcplpf.com created
-
- N: Create certificate (default settings)
- M: Create certificate (full options)
- R: Run renewals (0 currently due)
- A: Manage renewals (1 total)
- O: More options...
- Q: Quit
-
- Please choose from the menu:
+                return fetch(event.request).then(networkResponse => {
+                    if (
+                        networkResponse &&
+                        networkResponse.status === 200 &&
+                        event.request.method === "GET"
+                    ) {
+                        cache.put(event.request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                });
+            })
+        )
+    );
+});
