@@ -1,44 +1,20 @@
-const CACHE_NAME = "mvc-pwa-v2"; // 🔴 bump version
-
+const CACHE_NAME = "mvc-pwa-v3";
 self.addEventListener("install", event => {
     self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
     event.waitUntil(
-        caches.keys().then(keys => {
-            return Promise.all(
-                keys
-                    .filter(key => key !== CACHE_NAME)
-                    .map(key => caches.delete(key))
-            );
-        })
+        caches.keys().then(keys =>
+            Promise.all(
+                keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+            )
+        )
     );
     self.clients.claim();
 });
 
-self.addEventListener("fetch", event => {
-    if (event.request.method !== "GET") return;
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+}
 
-    // ✅ NEVER cache HTML or navigation
-    if (
-        event.request.mode === "navigate" ||
-        event.request.destination === "document"
-    ) {
-        event.respondWith(fetch(event.request));
-        return;
-    }
-
-    // ✅ Cache static assets only
-    event.respondWith(
-        caches.open(CACHE_NAME).then(cache =>
-            cache.match(event.request).then(response =>
-                response ||
-                fetch(event.request).then(networkResponse => {
-                    cache.put(event.request, networkResponse.clone());
-                    return networkResponse;
-                })
-            )
-        )
-    );
-});
